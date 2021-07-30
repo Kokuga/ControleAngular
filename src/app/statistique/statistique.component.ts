@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Statistique} from '../../models/statistique';
 import {StatistiqueService} from '../statistique.service';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-statistique',
@@ -9,21 +10,25 @@ import {StatistiqueService} from '../statistique.service';
 })
 export class StatistiqueComponent implements OnInit {
 
-  // public stat1: Statistique;
-  // public stat2: Statistique;
-  // public stat3: Statistique;
   public StatsArray!: Statistique[];
 
-  constructor(private Stats: StatistiqueService) {
-    // this.stat1 = new Statistique('dqzbid-dqdzq8dqzd', 'Une tongue à la mer', '50', 'SUCCESS');
-    // this.stat2 =  new Statistique('dqzbid-454484dzqdqz', 'Les JO du japon', '999', 'WARNING');
-    // this.stat3 =  new Statistique('dqzbidddqzdqzd-454dzqd4', 'Oui', '4', 'DANGER');
-    // this.StatsArray = [this.stat1, this.stat2, this.stat3];
+  constructor(private Stats: StatistiqueService, private http: HttpClient) {
+
     this.Stats.getStatistiques()
       .then((array) => (this.StatsArray = array));
   }
 
+
   ngOnInit(): void {
   }
 
+
+  deleteStat(id: string) {
+    this.http.delete('https://stats.naminilamy.fr/' + id)
+      .toPromise()
+      .then(() => {
+        let removedIndex = this.StatsArray.findIndex(stat => stat.id === id);
+        this.StatsArray.splice(removedIndex, 1);
+      });
+  }
 }
