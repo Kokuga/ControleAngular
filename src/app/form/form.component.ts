@@ -3,6 +3,7 @@ import {Statistique} from '../../models/statistique';
 import {StatistiqueService} from '../statistique.service';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from "@angular/router";
+import {webSocket} from 'rxjs/webSocket';
 
 @Component({
   selector: 'app-form',
@@ -17,6 +18,7 @@ export class FormComponent implements OnInit {
   public value = '';
   public appreciation = '';
   public status = '';
+  public message: any;
 
   constructor(private Stats: StatistiqueService, private http: HttpClient, private route: ActivatedRoute) {
 
@@ -25,6 +27,7 @@ export class FormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.connectToWs();
     this.status = 'create';
     if (this.route.snapshot.paramMap.get('statistiqueId')) {
       this.status = 'edit',
@@ -39,6 +42,20 @@ export class FormComponent implements OnInit {
             this.appreciation = edit.appreciation;
           });
     }
+  }
+
+  connectToWs(): void {
+    webSocket("wss://ac88n1oa17.execute-api.eu-west-3.amazonaws.com/dev")
+      .subscribe((msg: any) => {
+          this.message = msg;
+        },
+        (err: any) => {
+          this.message = err;
+        },
+        () => {
+          console.log('WebSocket disconnected, retry');
+          this.connectToWs();
+        });
   }
 
   AddEdit() {

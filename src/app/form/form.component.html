@@ -1,4 +1,7 @@
 <div>
+  <div *ngIf="message">
+    {{ message }}
+  </div>
   <label for="id">Id</label>
   <input type="text" id="id" placeholder="id" name="id" [(ngModel)]="id">
 
