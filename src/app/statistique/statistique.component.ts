@@ -39,18 +39,6 @@ export class StatistiqueComponent implements OnInit {
       });
   }
 
-  submit() {
-    this.http.post('https://stats.naminilamy.fr', {
-      id: this.id,
-      value: this.value,
-      title: this.title,
-      appreciation: this.appreciation
-    })
-      .subscribe((data: any) => {
-        this.StatsArray.push(new Statistique(data.id, data.value, data.title, data.appreciation));
-      });
-  }
-
   header(value: string) {
     console.log(value);
     switch (value) {
