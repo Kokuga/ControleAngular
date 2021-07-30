@@ -16,11 +16,13 @@ export class StatistiqueComponent implements OnInit {
   public title = '';
   public value = '';
   public appreciation = '';
+  public color: string;
 
   constructor(private Stats: StatistiqueService, private http: HttpClient) {
 
     this.Stats.getStatistiques()
       .then((array) => (this.StatsArray = array));
+    this.color = '';
   }
 
 
@@ -47,5 +49,21 @@ export class StatistiqueComponent implements OnInit {
       .subscribe((data: any) => {
         this.StatsArray.push(new Statistique(data.id, data.value, data.title, data.appreciation));
       });
+  }
+
+  header(value: string) {
+    console.log(value);
+    switch (value) {
+      case 'SUCCESS':
+        this.color = 'green';
+        break;
+      case 'WARNING':
+        this.color = 'orange';
+        break;
+      case 'DANGER':
+      case'ERROR':
+        this.color = 'red';
+        break;
+    }
   }
 }
