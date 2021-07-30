@@ -54,4 +54,5 @@ export class StatistiqueComponent implements OnInit {
         break;
     }
   }
+
 }
