@@ -6,3 +6,19 @@
   <button (click)="deleteStat(stat.id)">Supprimer</button>
   <p>-------------------------</p>
 </div>
+
+<div>
+  <label for="id">Id</label>
+  <input type="text" id="id" placeholder="id" name="id" [(ngModel)]="id">
+
+  <label for="title">title</label>
+  <input type="text" id="title" placeholder="title" name="title" [(ngModel)]="title">
+
+  <label for="value">value</label>
+  <input type="text" id="value" placeholder="value" name="value" [(ngModel)]="value">
+
+  <label for="appreciation">appreciation</label>
+  <input type="text" id="appreciation" placeholder="appreciation" name="appreciation" [(ngModel)]="appreciation">
+
+  <button type="button" (click)="submit()">Submit</button>
+</div>
